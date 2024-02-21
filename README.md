@@ -1,2 +1,2 @@
 # SRModelCompression
-code for &lt;Compressing Image Super-resolution Network via Model Compression and Knowledge Distillation>
+code for &lt;Compressing Deep Image Super-resolution Models>(https://arxiv.org/abs/2401.00523)
