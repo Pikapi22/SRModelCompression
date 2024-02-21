@@ -1,0 +1,62 @@
+# general settings
+name: test_SwinIRmini_SRx2_P64W8_DIV2K
+model_type: SwinIRModel
+scale: 2
+num_gpu: auto
+manual_seed: 0
+
+# dataset and data loader settings
+datasets:
+
+  test_1:
+    name: Set5
+    type: PairedImageDataset
+    dataroot_gt: datasets/Set5/GTmod12
+    dataroot_lq: datasets/Set5/LRbicx2
+    io_backend:
+      type: disk
+  test_2:  # the 2nd test dataset
+    name: Set14
+    type: PairedImageDataset
+    dataroot_gt: datasets/Set14/GTmod12
+    dataroot_lq: datasets/Set14/LRbicx2
+    io_backend:
+      type: disk
+
+# network structures
+network_g:
+  type: SwinIR
+  upscale: 2
+  in_chans: 3
+  img_size: 64
+  window_size: 8
+  img_range: 1.
+  depths: [4, 4, 4]
+  embed_dim: 24
+  num_heads: [6, 6, 6]
+  mlp_ratio: 2
+  upsampler: 'pixelshuffledirect'
+  resi_connection: '1conv'
+
+# path
+path:
+  pretrain_network_g: ~
+  strict_load_g: false
+  resume_state: params
+
+
+# validation settings
+val:
+  save_img: true
+  suffix: ~  # add suffix to saved images, if None, use exp name
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 2
+      test_y_channel: true
+    ssim:
+      type: calculate_ssim
+      crop_border: 2
+      test_y_channel: true
+

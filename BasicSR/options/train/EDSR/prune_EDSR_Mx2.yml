@@ -1,0 +1,112 @@
+# general settings
+name: 201_EDSR_Mx2_f64b16_DIV2K_B16G1_prune
+model_type: SRModel
+scale: 2
+num_gpu: 1  # set num_gpu: 0 for cpu mode
+manual_seed: 10
+
+# dataset and data loader settings
+datasets:
+  train:
+    name: DIV2K
+    type: PairedImageDataset
+    dataroot_gt: datasets/DIV2K/DIV2K_train_HR_sub_prune
+    dataroot_lq: datasets/DIV2K/DIV2K_train_LR_bicubic/X2_sub_prune
+    # (for lmdb)
+    # dataroot_gt: datasets/DIV2K/DIV2K_train_HR_sub.lmdb
+    # dataroot_lq: datasets/DIV2K/DIV2K_train_LR_bicubic_X2_sub.lmdb
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
+      # (for lmdb)
+      # type: lmdb
+
+    gt_size: 96
+    use_hflip: true
+    use_rot: true
+
+    # data loader
+    num_worker_per_gpu: 1
+    batch_size_per_gpu: 16
+    dataset_enlarge_ratio: 1
+    prefetch_mode: ~
+
+  val:
+    name: Set5
+    type: PairedImageDataset
+    dataroot_gt: datasets/Set5/GTmod12
+    dataroot_lq: datasets/Set5/LRbicx2
+    io_backend:
+      type: disk
+
+# network structures
+network_g:
+  type: EDSR
+  num_in_ch: 3
+  num_out_ch: 3
+  num_feat: 64
+  num_block: 16
+  upscale: 2
+  res_scale: 1
+  img_range: 255.
+  rgb_mean: [0.4488, 0.4371, 0.4040]
+
+# path
+path:
+  pretrain_network_g: experiments/pretrained_models/EDSR_Mx2_f64b16_DIV2K_official-3ba7b086.pth
+  strict_load_g: false
+  resume_state: ~
+
+# training settings
+train:
+  ema_decay: 0.999
+  optim_g:
+    type: OBProxSG
+    lr: !!float 5e-3
+    lambda_: !!float 1e-4
+    # L1 regularization weight
+    epochSize: 2560
+    # number of batches per epoch: num_iter_per_epoch*(dataset_opt['batch_size_per_gpu'] * opt['world_size'])
+    eps: 0.0001
+    # one from AdaCoF
+    Np: 60 # 5
+    # int(args.epochs / 10) one from AdaCoF
+
+  scheduler:
+    type: MultiStepLR
+    milestones: [20000]
+    gamma: 0.5
+
+  total_iter: 100000
+  warmup_iter: -1  # no warm up
+
+  # losses
+  pixel_opt:
+    type: CharbonnierLoss
+    loss_weight: 1.0
+    reduction: mean
+
+# validation settings
+val:
+  val_freq: !!float 160
+  save_img: false
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 2
+      test_y_channel: true
+
+# logging settings
+logger:
+  print_freq: 160
+  save_checkpoint_freq: !!float 500
+  use_tb_logger: true
+  wandb:
+    project: ~
+    resume_id: ~
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29500
