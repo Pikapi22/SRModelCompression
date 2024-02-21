@@ -1,4 +1,4 @@
-# Compressing Deep Image Super-resolution Models[**link**](https://arxiv.org/abs/2401.00523)
+# [**Compressing Deep Image Super-resolution Models**](https://arxiv.org/abs/2401.00523)
 ### Yuxuan Jiang, Jakub Nawała, Fan Zhang, David Bull
 ### Accepted in [**PCS2024**](https://signalprocessingsociety.org/blog/pcs-2024-2024-picture-coding-symposium).
 
