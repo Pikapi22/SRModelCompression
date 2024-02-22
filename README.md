@@ -11,6 +11,10 @@ This code is built based on [**BasicSR**](https://github.com/XPixelGroup/BasicSR
 [[Set5]](https://drive.google.com/drive/folders/1B3DJGQKB6eNdwuQIhdskA64qUuVKLZ9u)
 [[Set14]](https://drive.google.com/drive/folders/1B3DJGQKB6eNdwuQIhdskA64qUuVKLZ9u)
 
+## Workflow
+<img src="https://github.com/Pikapi22/Pikapi22.github.io/blob/main/CDISM/Picture5_3.svg" alt="Paper" width="60%">
+
+
 ## Pruning:
 ### SwinIR
 ```
@@ -43,6 +47,9 @@ python .\basicsr\test.py -opt .\options\test\SwinIR\test_EDSR_Mx2.yml
 ```
 python .\basicsr\test.py -opt .\options\test\EDSR\test_EDSR_Minix2.yml
 ```
+
+## Results
+<img src="https://github.com/Pikapi22/Pikapi22.github.io/blob/main/CDISM/performancetradeoff.svg" alt="Paper" width="100%">
 
 ## Citation
 ```
