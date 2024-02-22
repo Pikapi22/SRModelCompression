@@ -12,7 +12,7 @@ This code is built based on [**BasicSR**](https://github.com/XPixelGroup/BasicSR
 [[Set14]](https://drive.google.com/drive/folders/1B3DJGQKB6eNdwuQIhdskA64qUuVKLZ9u)
 
 ## Workflow
-<img src="https://github.com/Pikapi22/Pikapi22.github.io/blob/main/CDISM/Picture5_3.svg" alt="Paper" width="60%">
+<img src="https://github.com/Pikapi22/Pikapi22.github.io/blob/main/CDISM/Picture5_3.svg" alt="Paper" width="80%">
 
 
 ## Pruning:
@@ -49,7 +49,7 @@ python .\basicsr\test.py -opt .\options\test\EDSR\test_EDSR_Minix2.yml
 ```
 
 ## Results
-<img src="https://github.com/Pikapi22/Pikapi22.github.io/blob/main/CDISM/performancetradeoff.svg" alt="Paper" width="100%">
+<img src="https://github.com/Pikapi22/Pikapi22.github.io/blob/main/CDISM/performancetradeoff.svg" alt="Paper" width="60%">
 
 ## Citation
 ```
